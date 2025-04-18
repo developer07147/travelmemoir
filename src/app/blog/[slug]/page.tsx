@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Image from "next/image";
 
 // Blog post data
 const blogPosts = {
@@ -248,15 +249,15 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
       <div className="pt-28 pb-20">
         {/* Hero Image Section - Wider than content */}
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-          <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-            <div className="relative">
-              <img
-                src={post.image}
-                alt={post.title}
-                className="w-full h-[600px] object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-            </div>
+          <div className="relative w-full h-[500px] rounded-2xl overflow-hidden">
+            <Image
+              src={post.image}
+              alt={post.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              priority
+            />
           </div>
         </div>
 
