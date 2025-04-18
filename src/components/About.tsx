@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
+import Image from "next/image";
 
 const About = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -21,13 +22,15 @@ const About = () => {
           <motion.div
             ref={ref}
             style={{ y, opacity }}
-            className="relative h-[500px] rounded-2xl overflow-hidden"
+            className="relative w-full h-[400px] rounded-lg overflow-hidden"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-gray-900/50 to-transparent" />
-            <img
+            <Image
               src="/images/about.jpg"
-              alt="Travel India Founders"
-              className="w-full h-full object-cover"
+              alt="Travel photographer capturing a sunset"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              priority
             />
           </motion.div>
 
@@ -64,6 +67,14 @@ const About = () => {
                 Learn More About Us
               </button>
             </motion.div>
+
+            <p className="text-gray-600 mb-6">
+              I&apos;m passionate about capturing life&apos;s most precious moments through the lens of my camera. Whether it&apos;s the breathtaking landscapes of distant lands or the intimate details of local culture, I&apos;m always seeking to share authentic stories through my photography and writing.
+            </p>
+
+            <p className="text-gray-600">
+              Let&apos;s embark on this journey together!
+            </p>
           </motion.div>
         </div>
       </div>

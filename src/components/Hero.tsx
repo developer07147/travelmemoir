@@ -1,46 +1,35 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 
 const Hero = () => {
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [currentVideo, setCurrentVideo] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const videos = [
-    '/videos/hero1.mp4',
-    '/videos/hero2.mp4'
-  ];
+  const videos = ['/videos/hero1.mp4', '/videos/hero2.mp4'];
 
-  const videoRefs = [useRef<HTMLVideoElement>(null), useRef<HTMLVideoElement>(null)];
+  const videoRefs = useRef<HTMLVideoElement[]>([]);
 
   const handleVideoEnd = () => {
     setIsTransitioning(true);
     // Switch to next video
-    setCurrentVideoIndex((prev) => (prev + 1) % videos.length);
+    setCurrentVideo((prev) => (prev + 1) % videos.length);
   };
 
   useEffect(() => {
-    // When video index changes, start playing the new video
-    const currentVideo = videoRefs[currentVideoIndex].current;
-    const nextVideo = videoRefs[(currentVideoIndex + 1) % videos.length].current;
+    const playVideos = async () => {
+      try {
+        if (videoRefs.current[currentVideo]) {
+          await videoRefs.current[currentVideo].play();
+        }
+      } catch (error) {
+        console.error('Error playing video:', error);
+      }
+    };
 
-    if (currentVideo) {
-      currentVideo.play().catch(error => console.log("Video play error:", error));
-    }
-
-    // Preload next video
-    if (nextVideo) {
-      nextVideo.load();
-    }
-
-    // Reset transition state after animation
-    const timer = setTimeout(() => {
-      setIsTransitioning(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, [currentVideoIndex]);
+    playVideos();
+  }, [currentVideo, videoRefs, videos.length]);
 
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
@@ -59,12 +48,14 @@ const Hero = () => {
             className="absolute inset-0"
             initial={{ opacity: 0 }}
             animate={{ 
-              opacity: currentVideoIndex === index ? 1 : 0,
+              opacity: currentVideo === index ? 1 : 0,
               transition: { duration: 1 }
             }}
           >
             <video
-              ref={videoRefs[index]}
+              ref={(el) => {
+                videoRefs.current[index] = el as HTMLVideoElement;
+              }}
               className="w-full h-full object-cover"
               playsInline
               muted
