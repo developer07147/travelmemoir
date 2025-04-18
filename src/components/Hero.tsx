@@ -5,31 +5,47 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 
 const Hero = () => {
-  const [currentVideo, setCurrentVideo] = useState(0);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const videos = ['/videos/hero1.mp4', '/videos/hero2.mp4'];
-
-  const videoRefs = useRef<HTMLVideoElement[]>([]);
 
   const handleVideoEnd = () => {
     setIsTransitioning(true);
     // Switch to next video
-    setCurrentVideo((prev) => (prev + 1) % videos.length);
+    setCurrentVideoIndex((prev) => (prev + 1) % videos.length);
   };
 
   useEffect(() => {
-    const playVideos = async () => {
-      try {
-        if (videoRefs.current[currentVideo]) {
-          await videoRefs.current[currentVideo].play();
-        }
-      } catch (error) {
-        console.error('Error playing video:', error);
+    const videos = videoRefs.current;
+    if (!videos.length) return;
+
+    const playNextVideo = () => {
+      setIsTransitioning(true);
+      const currentVideo = videos[currentVideoIndex];
+      if (currentVideo) {
+        currentVideo.pause();
       }
+
+      const nextIndex = (currentVideoIndex + 1) % videos.length;
+      const nextVideo = videos[nextIndex];
+      if (nextVideo) {
+        nextVideo.currentTime = 0;
+        nextVideo.play().catch(console.error);
+      }
+
+      setCurrentVideoIndex(nextIndex);
+      setIsTransitioning(false);
     };
 
-    playVideos();
-  }, [currentVideo, videoRefs, videos.length]);
+    const currentVideo = videos[currentVideoIndex];
+    if (currentVideo) {
+      currentVideo.addEventListener("ended", playNextVideo);
+      return () => {
+        currentVideo.removeEventListener("ended", playNextVideo);
+      };
+    }
+  }, [currentVideoIndex, videoRefs.current, videoRefs.current.length]);
 
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
@@ -48,7 +64,7 @@ const Hero = () => {
             className="absolute inset-0"
             initial={{ opacity: 0 }}
             animate={{ 
-              opacity: currentVideo === index ? 1 : 0,
+              opacity: currentVideoIndex === index ? 1 : 0,
               transition: { duration: 1 }
             }}
           >
@@ -77,9 +93,9 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-5xl md:text-7xl font-bold text-white mb-6"
+            className="text-4xl md:text-6xl font-bold text-white mb-6"
           >
-            Effortless Travel, Everlasting Memories
+            Discover the World&apos;s Hidden Gems
           </motion.h1>
           
           <motion.p

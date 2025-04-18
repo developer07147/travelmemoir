@@ -5,6 +5,7 @@ import { useRef, useState } from 'react';
 import { useScroll, useTransform } from 'framer-motion';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import Image from "next/image";
 
 const testimonials = [
   {

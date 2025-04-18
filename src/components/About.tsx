@@ -68,11 +68,11 @@ const About = () => {
               </button>
             </motion.div>
 
-            <p className="text-gray-600 mb-6">
+            <p className="text-lg text-gray-600 mb-8">
               I&apos;m passionate about capturing life&apos;s most precious moments through the lens of my camera. Whether it&apos;s the breathtaking landscapes of distant lands or the intimate details of local culture, I&apos;m always seeking to share authentic stories through my photography and writing.
             </p>
 
-            <p className="text-gray-600">
+            <p className="text-lg text-gray-600">
               Let&apos;s embark on this journey together!
             </p>
           </motion.div>

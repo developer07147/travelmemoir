@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const destinations = [
   {
@@ -65,13 +66,14 @@ const Destinations = () => {
               whileHover={{ y: -10 }}
               className="group relative overflow-hidden rounded-2xl shadow-lg"
             >
-              <div className="aspect-w-16 aspect-h-9">
-                <img
+              <div className="relative h-64 rounded-lg overflow-hidden">
+                <Image
                   src={destination.image}
                   alt={destination.name}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
               </div>
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <h3 className="text-2xl font-bold text-white mb-2">

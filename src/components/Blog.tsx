@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const blogPosts = [
   {
@@ -60,11 +61,13 @@ const Blog = () => {
               whileHover={{ y: -10 }}
               className="bg-white rounded-2xl overflow-hidden shadow-lg"
             >
-              <div className="aspect-w-16 aspect-h-9">
-                <img
+              <div className="relative h-64 rounded-lg overflow-hidden">
+                <Image
                   src={post.image}
                   alt={post.title}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
               <div className="p-6">
