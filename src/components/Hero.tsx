@@ -7,21 +7,13 @@ import Link from 'next/link';
 const Hero = () => {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const videos = ['/videos/hero1.mp4', '/videos/hero2.mp4'];
-
-  const handleVideoEnd = () => {
-    setIsTransitioning(true);
-    // Switch to next video
-    setCurrentVideoIndex((prev) => (prev + 1) % videos.length);
-  };
 
   useEffect(() => {
     const videos = videoRefs.current;
     if (!videos.length) return;
 
     const playNextVideo = () => {
-      setIsTransitioning(true);
       const currentVideo = videos[currentVideoIndex];
       if (currentVideo) {
         currentVideo.pause();
@@ -35,7 +27,6 @@ const Hero = () => {
       }
 
       setCurrentVideoIndex(nextIndex);
-      setIsTransitioning(false);
     };
 
     const currentVideo = videos[currentVideoIndex];
@@ -45,7 +36,7 @@ const Hero = () => {
         currentVideo.removeEventListener("ended", playNextVideo);
       };
     }
-  }, [currentVideoIndex, videoRefs.current, videoRefs.current.length]);
+  }, [currentVideoIndex, videos.length]);
 
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
@@ -76,7 +67,6 @@ const Hero = () => {
               playsInline
               muted
               autoPlay={index === 0}
-              onEnded={handleVideoEnd}
               loop={false}
             >
               <source src={video} type="video/mp4" />

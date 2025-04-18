@@ -114,10 +114,12 @@ const Testimonials = () => {
                 >
                   <div className="flex items-center mb-6">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4">
-                      <img
+                      <Image
                         src={testimonial.image}
                         alt={testimonial.name}
-                        className="w-full h-full object-cover"
+                        width={64}
+                        height={64}
+                        className="object-cover"
                       />
                     </div>
                     <div>

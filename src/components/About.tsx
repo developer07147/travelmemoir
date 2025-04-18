@@ -47,11 +47,11 @@ const About = () => {
             </h2>
             
             <p className="text-lg text-gray-300 leading-relaxed">
-              We're just two passionate travelers who've wandered through India's valleys, coasts, and cultural corridors. From cozy hidden gems to majestic wonders, we've experienced it all — and now, we're bringing that knowledge to help you experience travel effortlessly.
+              We&apos;re just two passionate travelers who&apos;ve wandered through India&apos;s valleys, coasts, and cultural corridors. From cozy hidden gems to majestic wonders, we&apos;ve experienced it all — and now, we&apos;re bringing that knowledge to help you experience travel effortlessly.
             </p>
             
             <p className="text-lg text-gray-300 leading-relaxed">
-              Whether you're a family, a couple, a solo wanderer, or a group of friends, we take care of the planning, so you can simply create memories.
+              Whether you&apos;re a family, a couple, a solo wanderer, or a group of friends, we take care of the planning, so you can simply create memories.
             </p>
             
             <p className="text-lg font-medium text-white">
